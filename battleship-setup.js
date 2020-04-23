@@ -1,4 +1,14 @@
 $(document).ready(function () {
+    let username1 = localStorage.getItem("username1");
+    let username2 = localStorage.getItem("username2");
+
+    if (username1 != null) {
+        $("#playerId").text(username1 + ":");
+    }
+    else {
+        $("#playerId").text("Player1:");
+    }
+
     let startBattleships4 = parseInt($("#cntBattleships4").text());
     let startBattleships3 = parseInt($("#cntBattleships3").text());
     let startBattleships2 = parseInt($("#cntBattleships2").text());
@@ -20,7 +30,12 @@ $(document).ready(function () {
     }
     */
     
-    $("#playerId").text("Player2:");
+    if (username2 != null) {
+        $("#playerId").text(username2 + ":");
+    }
+    else {
+        $("#playerId").text("Player2:");
+    }
     $("#cntBattleships4").text(startBattleships4.toString())
     $("#cntBattleships3").text(startBattleships3.toString())
     $("#cntBattleships2").text(startBattleships2.toString())
@@ -43,9 +58,9 @@ $(document).ready(function () {
     */
 
     // TODO: delete
-    alert("REDIRECT");
+    //alert("REDIRECT");
     
     // TODO: save cnt of ship tiles for both players
 
-    window.location.replace("battleship-game.html");
+    //window.location.replace("battleship-game.html");
 });
