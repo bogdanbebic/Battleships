@@ -11,7 +11,6 @@
     <title>Battleships</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='battleship-style.css'>
-    <script src='battleship-script.js'></script>
 </head>
 
 <body>
@@ -178,7 +177,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-1 col-12">
+            <div id="playerId" class="col-md-1 col-12">
                 Player1:
             </div>
             <div class="col-md-11 col-12">
@@ -186,16 +185,16 @@
                     <!-- Available battleships to place -->
                     <ul class="list-group">
                         <li class="list-group-item">
-                            4 tile ships remaining: 1
+                            4 tile ships remaining: <span id="cntBattleships4">1</span>
                         </li>
                         <li class="list-group-item">
-                            3 tile ships remaining: 2
+                            3 tile ships remaining: <span id="cntBattleships3">2</span>
                         </li>
                         <li class="list-group-item">
-                            2 tile ships remaining: 3
+                            2 tile ships remaining: <span id="cntBattleships2">3</span>
                         </li>
                         <li class="list-group-item">
-                            1 tile ships remaining: 4
+                            1 tile ships remaining: <span id="cntBattleships1">4</span>
                         </li>
                     </ul>
                 </div>
@@ -219,6 +218,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"
+        integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+    <script src='battleship-setup.js'></script>
 </body>
 
 </html>
