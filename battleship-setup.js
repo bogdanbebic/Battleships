@@ -20,12 +20,11 @@ $(document).ready(function () {
         localStorage.setItem(username2);
     }
 
-    // init start and end of ship
+    // init start and end of ship indices
     let startIndex  = -1;
     let endIndex    = -1;
 
     // Player 1 move
-
     let playerIndexSetup = 1;
     $("#playerId").text(username1 + ":");
 
@@ -49,6 +48,7 @@ $(document).ready(function () {
             return;
         }
 
+        // TODO: delete
         $(this).addClass("border border-danger");
         console.log("END: " + $("td").index(this));
 
@@ -57,7 +57,7 @@ $(document).ready(function () {
 
         // TODO: implement
 
-        
+
         // TODO: delete if statements
         if (endIndex == 0) {
             cntBattleships1--;
@@ -95,6 +95,8 @@ $(document).ready(function () {
                 // Player 2 move
                 playerIndexSetup = 2;
                 $("#playerId").text(username2 + ":");
+
+                // reset battleship counters
                 cntBattleships1 = startBattleships1;
                 cntBattleships2 = startBattleships2;
                 cntBattleships3 = startBattleships3;
@@ -106,9 +108,4 @@ $(document).ready(function () {
             }
         }
     })
-
-    
-
-    
-
 });
