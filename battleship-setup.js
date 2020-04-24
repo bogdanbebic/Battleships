@@ -20,6 +20,10 @@ $(document).ready(function () {
         localStorage.setItem(username2);
     }
 
+    // init start and end of ship
+    let startIndex  = -1;
+    let endIndex    = -1;
+
     // Player 1 move
 
     let playerIndexSetup = 1;
@@ -30,39 +34,81 @@ $(document).ready(function () {
     let cntBattleships3 = startBattleships3;
     let cntBattleships4 = startBattleships4;
 
-    // TODO: implement
-
-    // reset battleship counters
-    $("#cntBattleships4").text(startBattleships4.toString())
-    $("#cntBattleships3").text(startBattleships3.toString())
-    $("#cntBattleships2").text(startBattleships2.toString())
-    $("#cntBattleships1").text(startBattleships1.toString())
-    
-    // Player 2 move
-
-    playerIndexSetup = 2;
-    $("#playerId").text(username2 + ":");
-    
-    cntBattleships1 = startBattleships1;
-    cntBattleships2 = startBattleships2;
-    cntBattleships3 = startBattleships3;
-    cntBattleships4 = startBattleships4;
-
     $("td").mousedown(function (event) {
+        // TODO: delete
         $(this).addClass("border border-success");
         // $("td").index(this) -> returns linearized index of td in table
         console.log("START: " + $("td").index(this));
+
+        startIndex  = $("td").index(this);
+        endIndex    = -1;
     })
     
     $("td").mouseup(function (event) {
+        if (startIndex == -1) {
+            return;
+        }
+
         $(this).addClass("border border-danger");
         console.log("END: " + $("td").index(this));
+
+        endIndex = $("td").index(this);
+
+
+        // TODO: implement
+
+        
+        // TODO: delete if statements
+        if (endIndex == 0) {
+            cntBattleships1--;
+        }
+        if (endIndex == 1){
+            cntBattleships2--;
+        }
+        if (endIndex == 2) {
+            cntBattleships3--;
+        }
+        if (endIndex == 3) {
+            cntBattleships4--;
+        }
+
+        // update labels of ships remaining
+        $("#cntBattleships4").text(cntBattleships4.toString())
+        $("#cntBattleships3").text(cntBattleships3.toString())
+        $("#cntBattleships2").text(cntBattleships2.toString())
+        $("#cntBattleships1").text(cntBattleships1.toString())
+
+        // reset indices
+        startIndex  = -1;
+        endIndex    = -1;
+
+        if (cntBattleships1 + cntBattleships2 + cntBattleships3 + cntBattleships4 == 0) {
+            // reset battleship counters
+            $("#cntBattleships4").text(startBattleships4.toString())
+            $("#cntBattleships3").text(startBattleships3.toString())
+            $("#cntBattleships2").text(startBattleships2.toString())
+            $("#cntBattleships1").text(startBattleships1.toString())
+            
+            playerIndexSetup++;
+
+            if (playerIndexSetup == 2) {
+                // Player 2 move
+                playerIndexSetup = 2;
+                $("#playerId").text(username2 + ":");
+                cntBattleships1 = startBattleships1;
+                cntBattleships2 = startBattleships2;
+                cntBattleships3 = startBattleships3;
+                cntBattleships4 = startBattleships4;
+            } else {
+                // finished setup
+                alert("REDIRECT");
+                window.location.replace("battleship-game.html");
+            }
+        }
     })
 
-    // TODO: delete
-    //alert("REDIRECT");
     
-    // TODO: save cnt of ship tiles for both players
 
-    //window.location.replace("battleship-game.html");
+    
+
 });
