@@ -76,7 +76,7 @@ $(document).ready(function () {
     // get usernames from storage
     let username1 = localStorage.getItem("username1");
     let username2 = localStorage.getItem("username2");
-    
+
     // set default usernames if necessary
     if (username1 == null) {
         username1 = "Player1";
@@ -105,7 +105,7 @@ $(document).ready(function () {
         startIndex  = $("td").index(this);
         endIndex    = -1;
     })
-    
+
     $("td").mouseup(function (event) {
         if (startIndex == -1) {
             return;
@@ -133,12 +133,12 @@ $(document).ready(function () {
                 battleshipCurrentIndex += 1;
             }
         }
-        
+
         let battleshipLength = calculateBattleshipLength(startIndex, endIndex);
         if (cntBattleships1 > 0 && battleshipLength == 1) {
             cntBattleships1--;
         }
-        else if (cntBattleships2 > 0 && battleshipLength == 2){
+        else if (cntBattleships2 > 0 && battleshipLength == 2) {
             cntBattleships2--;
         }
         else if (cntBattleships3 > 0 && battleshipLength == 3) {
@@ -178,7 +178,7 @@ $(document).ready(function () {
             $("#cntBattleships3").text(startBattleships3.toString())
             $("#cntBattleships2").text(startBattleships2.toString())
             $("#cntBattleships1").text(startBattleships1.toString())
-            
+
             playerIndexSetup++;
 
             if (playerIndexSetup == 2) {
