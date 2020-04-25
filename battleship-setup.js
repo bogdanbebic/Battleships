@@ -1,7 +1,6 @@
 function isHorizontal(i, j) {
     let greater = Math.max(i, j);
     let smaller = Math.min(i, j);
-    console.log("H: ", greater, smaller);
     return (greater - smaller < 10) && (greater % 10 > smaller % 10);
 }
 
@@ -18,10 +17,48 @@ function calculateBattleshipLength(start, end) {
         return greater - smaller + 1;
     }
     else if (isVertical(start, end)) {
-        return greater / 10 - smaller / 10 + 1;
+        return Math.ceil(greater / 10) - Math.ceil(smaller / 10) + 1;
     }
 
     return -1;
+}
+
+function areNeighborCellsAvailable(index) {
+    let ret = $("td").eq(index).text() != "O";
+
+    if (index > 9) {
+        ret &= $("td").eq(index - 10).text() != "O";
+    }
+
+    if (index < 90) {
+        ret &= $("td").eq(index + 10).text() != "O";
+    }
+
+    if (index % 10 != 0) {
+        ret &= $("td").eq(index - 1).text() != "O";
+    }
+
+    if (index % 10 != 9) {
+        ret &= $("td").eq(index + 1).text() != "O";
+    }
+
+    if (index > 9 && index % 10 != 0) {
+        ret &= $("td").eq(index - 11).text() != "O";
+    }
+
+    if (index > 9 && index % 10 != 9) {
+        ret &= $("td").eq(index - 9).text() != "O";
+    }
+
+    if (index < 90 && index % 10 != 0) {
+        ret &= $("td").eq(index + 9).text() != "O";
+    }
+
+    if (index < 90 && index % 10 != 9) {
+        ret &= $("td").eq(index + 11).text() != "O";
+    }
+
+    return ret;
 }
 
 $(document).ready(function () {
@@ -87,8 +124,22 @@ $(document).ready(function () {
             return;
         }
 
-        // TODO: check if occupied
+        let greater = Math.max(startIndex, endIndex);
+        let smaller = Math.min(startIndex, endIndex);
 
+        let battleshipCurrentIndex = smaller;
+        while (battleshipCurrentIndex <= greater) {
+            if (!areNeighborCellsAvailable(battleshipCurrentIndex)) {
+                return;
+            }
+
+            if (isVertical(startIndex, endIndex)) {
+                battleshipCurrentIndex += 10;
+            }
+            else {
+                battleshipCurrentIndex += 1;
+            }
+        }
         
         let battleshipLength = calculateBattleshipLength(startIndex, endIndex);
         if (cntBattleships1 > 0 && battleshipLength == 1) {
@@ -107,10 +158,7 @@ $(document).ready(function () {
             return;
         }
 
-        let greater = Math.max(startIndex, endIndex);
-        let smaller = Math.min(startIndex, endIndex);
-
-        let battleshipCurrentIndex = smaller;
+        battleshipCurrentIndex = smaller;
         while (battleshipCurrentIndex <= greater) {
             $("td").eq(battleshipCurrentIndex).text("O");
             if (isVertical(startIndex, endIndex)) {
