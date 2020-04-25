@@ -33,6 +33,13 @@ $(document).ready(function () {
     let cntBattleships3 = startBattleships3;
     let cntBattleships4 = startBattleships4;
 
+    let tablePlayer1 = [];
+    let tablePlayer2 = [];
+    $("td").each(function (index) {
+        tablePlayer1.push($(this).text());
+        tablePlayer2.push($(this).text());
+    });
+
     $("td").mousedown(function (event) {
         // TODO: delete
         $(this).addClass("border border-success");
@@ -92,6 +99,12 @@ $(document).ready(function () {
             playerIndexSetup++;
 
             if (playerIndexSetup == 2) {
+                // save player 1 battleships
+                localStorage.setItem("battleshipsPlayer1", JSON.stringify(tablePlayer1));
+
+                // reset table cells
+                $("td").text("");
+
                 // Player 2 move
                 playerIndexSetup = 2;
                 $("#playerId").text(username2 + ":");
@@ -102,6 +115,9 @@ $(document).ready(function () {
                 cntBattleships3 = startBattleships3;
                 cntBattleships4 = startBattleships4;
             } else {
+                // save player 2 battleships
+                localStorage.setItem("battleshipsPlayer2", JSON.stringify(tablePlayer2));
+
                 // finished setup
                 alert("REDIRECT");
                 window.location.replace("battleship-game.html");
