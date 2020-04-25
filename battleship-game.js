@@ -3,12 +3,28 @@ $(document).ready(function () {
     $("tr").addClass("d-flex");
     $("th").addClass("col");
     $("td").addClass("col");
-    
+
+    // get usernames from storage
     let username1 = localStorage.getItem("username1");
     let username2 = localStorage.getItem("username2");
 
+    // set default usernames if necessary
+    if (username1 == null) {
+        username1 = "Player1";
+        localStorage.setItem(username1);
+    }
+
+    if (username2 == null) {
+        username2 = "Player2";
+        localStorage.setItem(username2);
+    }
+
+    // get setup battleships
     let tablePlayer1 = JSON.parse(localStorage.getItem("battleshipsPlayer1"));
     let tablePlayer2 = JSON.parse(localStorage.getItem("battleshipsPlayer2"));
+
+    let playerIndexPlay = 1;
+    $("#user_playing").text(username1);
 
     /*
     // hide/show current player ships
