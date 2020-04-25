@@ -101,13 +101,6 @@ $(document).ready(function () {
     let cntBattleships3 = startBattleships3;
     let cntBattleships4 = startBattleships4;
 
-    let tablePlayer1 = [];
-    let tablePlayer2 = [];
-    $("td").each(function (index) {
-        tablePlayer1.push($(this).text());
-        tablePlayer2.push($(this).text());
-    });
-
     $("td").mousedown(function (event) {
         startIndex  = $("td").index(this);
         endIndex    = -1;
@@ -190,6 +183,10 @@ $(document).ready(function () {
 
             if (playerIndexSetup == 2) {
                 // save player 1 battleships
+                let tablePlayer1 = [];
+                $("td").each(function (index) {
+                    tablePlayer1.push($(this).text());
+                });
                 localStorage.setItem("battleshipsPlayer1", JSON.stringify(tablePlayer1));
 
                 // reset table cells
@@ -206,6 +203,10 @@ $(document).ready(function () {
                 cntBattleships4 = startBattleships4;
             } else {
                 // save player 2 battleships
+                let tablePlayer2 = [];
+                $("td").each(function (index) {
+                    tablePlayer2.push($(this).text());
+                });
                 localStorage.setItem("battleshipsPlayer2", JSON.stringify(tablePlayer2));
 
                 // finished setup
