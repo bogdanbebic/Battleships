@@ -41,11 +41,6 @@ $(document).ready(function () {
     });
 
     $("td").mousedown(function (event) {
-        // TODO: delete
-        $(this).addClass("border border-success");
-        // $("td").index(this) -> returns linearized index of td in table
-        console.log("START: " + $("td").index(this));
-
         startIndex  = $("td").index(this);
         endIndex    = -1;
     })
@@ -54,10 +49,6 @@ $(document).ready(function () {
         if (startIndex == -1) {
             return;
         }
-
-        // TODO: delete
-        $(this).addClass("border border-danger");
-        console.log("END: " + $("td").index(this));
 
         endIndex = $("td").index(this);
 
