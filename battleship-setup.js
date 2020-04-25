@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    // for better appearence of table
+    $("tr").addClass("d-flex");
+    $("th").addClass("col");
+    $("td").addClass("col");
+
     // get battleships count
     let startBattleships4 = parseInt($("#cntBattleships4").text());
     let startBattleships3 = parseInt($("#cntBattleships3").text());

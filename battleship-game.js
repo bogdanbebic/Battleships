@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    // for better appearence of table
+    $("tr").addClass("d-flex");
+    $("th").addClass("col");
+    $("td").addClass("col");
+    
     let username1 = localStorage.getItem("username1");
     let username2 = localStorage.getItem("username2");
 
