@@ -1,3 +1,29 @@
+function isHorizontal(i, j) {
+    let greater = Math.max(i, j);
+    let smaller = Math.min(i, j);
+    console.log("H: ", greater, smaller);
+    return (greater - smaller < 10) && (greater % 10 > smaller % 10);
+}
+
+function isVertical(i, j) {
+    let greater = Math.max(i, j);
+    let smaller = Math.min(i, j);
+    return (greater - smaller) % 10 == 0;
+}
+
+function calculateBattleshipLength(start, end) {
+    let greater = Math.max(start, end);
+    let smaller = Math.min(start, end);
+    if (isHorizontal(start, end)) {
+        return greater - smaller + 1;
+    }
+    else if (isVertical(start, end)) {
+        return greater / 10 - smaller / 10 + 1;
+    }
+
+    return -1;
+}
+
 $(document).ready(function () {
     // for better appearence of table
     $("tr").addClass("d-flex");
@@ -57,22 +83,42 @@ $(document).ready(function () {
 
         endIndex = $("td").index(this);
 
+        if (!isHorizontal(startIndex, endIndex) && !isVertical(startIndex, endIndex)) {
+            return;
+        }
 
-        // TODO: implement
+        // TODO: check if occupied
 
-
-        // TODO: delete if statements
-        if (endIndex == 0) {
+        
+        let battleshipLength = calculateBattleshipLength(startIndex, endIndex);
+        if (cntBattleships1 > 0 && battleshipLength == 1) {
             cntBattleships1--;
         }
-        if (endIndex == 1){
+        else if (cntBattleships2 > 0 && battleshipLength == 2){
             cntBattleships2--;
         }
-        if (endIndex == 2) {
+        else if (cntBattleships3 > 0 && battleshipLength == 3) {
             cntBattleships3--;
         }
-        if (endIndex == 3) {
+        else if (cntBattleships4 > 0 && battleshipLength == 4) {
             cntBattleships4--;
+        }
+        else {
+            return;
+        }
+
+        let greater = Math.max(startIndex, endIndex);
+        let smaller = Math.min(startIndex, endIndex);
+
+        let battleshipCurrentIndex = smaller;
+        while (battleshipCurrentIndex <= greater) {
+            $("td").eq(battleshipCurrentIndex).text("O");
+            if (isVertical(startIndex, endIndex)) {
+                battleshipCurrentIndex += 10;
+            }
+            else {
+                battleshipCurrentIndex += 1;
+            }
         }
 
         // update labels of ships remaining
