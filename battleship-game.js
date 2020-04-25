@@ -10,6 +10,20 @@ $(document).ready(function () {
     let tablePlayer1 = JSON.parse(localStorage.getItem("battleshipsPlayer1"));
     let tablePlayer2 = JSON.parse(localStorage.getItem("battleshipsPlayer2"));
 
+    /*
+    // hide/show current player ships
+    $("#my_ships_button").click(function () {
+        if ($("#my_ships_button").text() == "Hide my ships") {
+            $("#user_battleships_table").hide();
+            $("#my_ships_button").text("Show my ships");
+        }
+        else {
+            $("#user_battleships_table").show();
+            $("#my_ships_button").text("Hide my ships");
+        }
+    })
+    */
+
     $(".attackable td").click(function (event) {
         $(this).text("X");
 
