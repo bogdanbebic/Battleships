@@ -1,4 +1,28 @@
-$(document).ready(function () {
+$(document).ready(function () { 
+    function setNewTextInOpponentShipsTable(indexInTable, textToSet) {
+        $(".attackable td").eq(indexInTable).text(textToSet);
+    }
+
+    function setNewTextInMyShipsTable(indexInTable, textToSet) {
+        $("#user_battleships_table td").eq(indexInTable).text(textToSet);
+    }
+
+    function overwriteOpponentShipsTable(tableText) {
+        $(".attackable td").text("");
+        for (let index = 0; index < tableText.length; index++) {
+            if (tableText[index] != "O") {
+                setNewTextInOpponentShipsTable(index, tableText[index]);
+            }
+        }
+    }
+
+    function overwriteMyShipsTable(tableText) {
+        $("#user_battleships_table td").text("");
+        for (let index = 0; index < tableText.length; index++) {
+            setNewTextInMyShipsTable(index, tableText[index]);
+        }
+    }
+
     // for better appearence of table
     $("tr").addClass("d-flex");
     $("th").addClass("col");
@@ -23,8 +47,12 @@ $(document).ready(function () {
     let tablePlayer1 = JSON.parse(localStorage.getItem("battleshipsPlayer1"));
     let tablePlayer2 = JSON.parse(localStorage.getItem("battleshipsPlayer2"));
 
+    let battleshipCnt1 = tablePlayer1.filter(x => x == "O").length;
+    let battleshipCnt2 = tablePlayer2.filter(x => x == "O").length;
+
     let playerIndexPlay = 1;
     $("#user_playing").text(username1);
+    overwriteMyShipsTable(tablePlayer1);
 
     /*
     // hide/show current player ships
@@ -41,10 +69,62 @@ $(document).ready(function () {
     */
 
     $(".attackable td").click(function (event) {
-        $(this).text("X");
+        let attackedIndex = $(".attackable td").index(this);
+        let waitTime = 1000;
+        if (playerIndexPlay == 1) {
+            if (tablePlayer2[attackedIndex] == "/" || tablePlayer2[attackedIndex] == "X") {
+                return;
+            }
+            else if (tablePlayer2[attackedIndex] == "O") {
+                tablePlayer2[attackedIndex] = "X";
+                if (--battleshipCnt2 == 0) {
+                    setTimeout(function () {
+                        alert(username1 + " wins with " + battleshipCnt1 + " battleships left");
+                        window.location.replace("battleship-welcome.html");
+                    }, waitTime);
+                }
+            }
+            else {
+                tablePlayer2[attackedIndex] = "/";
+            }
 
-        // $(".attackable td").index(this) -> returns linearized index of td in attackable table
-        alert($(".attackable td").index(this));
+            setNewTextInOpponentShipsTable(attackedIndex, tablePlayer2[attackedIndex]);
+            if (tablePlayer2[attackedIndex] == '/') {
+                setTimeout(function () {
+                    playerIndexPlay++;
+                    $("#user_playing").text(username2);
+                    overwriteOpponentShipsTable(tablePlayer1);
+                    overwriteMyShipsTable(tablePlayer2);
+                }, waitTime);
+            }
+        }
+        else {
+            if (tablePlayer1[attackedIndex] == "/" || tablePlayer1[attackedIndex] == "X") {
+                return;
+            }
+            else if (tablePlayer1[attackedIndex] == "O") {
+                tablePlayer1[attackedIndex] = "X";
+                if (--battleshipCnt1 == 0) {
+                    setTimeout(function () {
+                        alert(username2 + " wins with " + battleshipCnt2 + " battleships left");
+                        window.location.replace("battleship-welcome.html");                        
+                    }, waitTime);
+                }
+            }
+            else {
+                tablePlayer1[attackedIndex] = "/";
+            }
+
+            setNewTextInOpponentShipsTable(attackedIndex, tablePlayer1[attackedIndex]);
+            if (tablePlayer1[attackedIndex] == '/') {
+                setTimeout(function () {
+                    playerIndexPlay = 1;
+                    $("#user_playing").text(username1);
+                    overwriteOpponentShipsTable(tablePlayer2);
+                    overwriteMyShipsTable(tablePlayer1);
+                }, waitTime);
+            }
+        }
     });
 
 });
