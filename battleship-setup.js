@@ -171,7 +171,7 @@ $(document).ready(function () {
         // reset indices
         startIndex  = -1;
         endIndex    = -1;
-
+        let waitTime = 1000;
         if (cntBattleships1 + cntBattleships2 + cntBattleships3 + cntBattleships4 == 0) {
             // reset battleship counters
             $("#cntBattleships4").text(startBattleships4.toString())
@@ -189,18 +189,20 @@ $(document).ready(function () {
                 });
                 localStorage.setItem("battleshipsPlayer1", JSON.stringify(tablePlayer1));
 
-                // reset table cells
-                $("td").text("");
+                setTimeout(function () {
+                    // reset table cells
+                    $("td").text("");
 
-                // Player 2 move
-                playerIndexSetup = 2;
-                $("#playerId").text(username2 + ":");
+                    // Player 2 move
+                    playerIndexSetup = 2;
+                    $("#playerId").text(username2 + ":");
 
-                // reset battleship counters
-                cntBattleships1 = startBattleships1;
-                cntBattleships2 = startBattleships2;
-                cntBattleships3 = startBattleships3;
-                cntBattleships4 = startBattleships4;
+                    // reset battleship counters
+                    cntBattleships1 = startBattleships1;
+                    cntBattleships2 = startBattleships2;
+                    cntBattleships3 = startBattleships3;
+                    cntBattleships4 = startBattleships4;
+                }, waitTime);
             } else {
                 // save player 2 battleships
                 let tablePlayer2 = [];
@@ -210,8 +212,7 @@ $(document).ready(function () {
                 localStorage.setItem("battleshipsPlayer2", JSON.stringify(tablePlayer2));
 
                 // finished setup
-                alert("REDIRECT");
-                window.location.replace("battleship-game.html");
+                setTimeout(function () { window.location.replace("battleship-game.html"); }, waitTime);
             }
         }
     })
