@@ -68,7 +68,12 @@ $(document).ready(function () {
     })
     */
 
+    let missed = false;
     $(".attackable td").click(function (event) {
+        if (missed) {
+            return;
+        }
+
         let attackedIndex = $(".attackable td").index(this);
         let waitTime = 1000;
         if (playerIndexPlay == 1) {
@@ -90,11 +95,13 @@ $(document).ready(function () {
 
             setNewTextInOpponentShipsTable(attackedIndex, tablePlayer2[attackedIndex]);
             if (tablePlayer2[attackedIndex] == '/') {
+                missed = true;
                 setTimeout(function () {
                     playerIndexPlay++;
                     $("#user_playing").text(username2);
                     overwriteOpponentShipsTable(tablePlayer1);
                     overwriteMyShipsTable(tablePlayer2);
+                    missed = false;
                 }, waitTime);
             }
         }
@@ -117,11 +124,13 @@ $(document).ready(function () {
 
             setNewTextInOpponentShipsTable(attackedIndex, tablePlayer1[attackedIndex]);
             if (tablePlayer1[attackedIndex] == '/') {
+                missed = true;
                 setTimeout(function () {
                     playerIndexPlay = 1;
                     $("#user_playing").text(username1);
                     overwriteOpponentShipsTable(tablePlayer2);
                     overwriteMyShipsTable(tablePlayer1);
+                    missed = false;
                 }, waitTime);
             }
         }
