@@ -11,12 +11,12 @@ $(document).ready(function () {
     // set default usernames if necessary
     if (username1 == null) {
         username1 = "Player1";
-        localStorage.setItem(username1);
+        localStorage.setItem("username1", username1);
     }
 
     if (username2 == null) {
         username2 = "Player2";
-        localStorage.setItem(username2);
+        localStorage.setItem("username2", username2);
     }
 
     // get setup battleships
