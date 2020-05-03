@@ -101,6 +101,16 @@ $(document).ready(function () {
     let cntBattleships3 = startBattleships3;
     let cntBattleships4 = startBattleships4;
 
+    let battleships1 = {
+        player : 1,
+        battleships : []
+    }
+
+    let battleships2 = {
+        player : 2,
+        battleships : []
+    }
+
     $("td").mousedown(function (event) {
         startIndex  = $("td").index(this);
         endIndex    = -1;
@@ -151,9 +161,15 @@ $(document).ready(function () {
             return;
         }
 
+        let battleship = {
+            notHitCount : battleshipLength,
+            indices : []
+        };
+
         battleshipCurrentIndex = smaller;
         while (battleshipCurrentIndex <= greater) {
             $("td").eq(battleshipCurrentIndex).text("O");
+            battleship.indices.push(battleshipCurrentIndex);
             if (isVertical(startIndex, endIndex)) {
                 battleshipCurrentIndex += 10;
             }
@@ -167,6 +183,14 @@ $(document).ready(function () {
         $("#cntBattleships3").text(cntBattleships3.toString())
         $("#cntBattleships2").text(cntBattleships2.toString())
         $("#cntBattleships1").text(cntBattleships1.toString())
+
+
+        if (playerIndexSetup == 1) {
+            battleships1.battleships.push(battleship);
+        }
+        else {
+            battleships2.battleships.push(battleship);
+        }
 
         // reset indices
         startIndex  = -1;
@@ -188,6 +212,7 @@ $(document).ready(function () {
                     tablePlayer1.push($(this).text());
                 });
                 localStorage.setItem("battleshipsPlayer1", JSON.stringify(tablePlayer1));
+                localStorage.setItem("battleships1", JSON.stringify(battleships1));
 
                 setTimeout(function () {
                     // reset table cells
@@ -210,6 +235,7 @@ $(document).ready(function () {
                     tablePlayer2.push($(this).text());
                 });
                 localStorage.setItem("battleshipsPlayer2", JSON.stringify(tablePlayer2));
+                localStorage.setItem("battleships2", JSON.stringify(battleships2));
 
                 // finished setup
                 setTimeout(function () { window.location.replace("battleship-game.html"); }, waitTime);

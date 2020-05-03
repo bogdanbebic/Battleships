@@ -47,6 +47,9 @@ $(document).ready(function () {
     let tablePlayer1 = JSON.parse(localStorage.getItem("battleshipsPlayer1"));
     let tablePlayer2 = JSON.parse(localStorage.getItem("battleshipsPlayer2"));
 
+    let battleships1 = JSON.parse(localStorage.getItem("battleships1")).battleships;
+    let battleships2 = JSON.parse(localStorage.getItem("battleships2")).battleships;
+
     let battleshipCnt1 = tablePlayer1.filter(x => x == "O").length;
     let battleshipCnt2 = tablePlayer2.filter(x => x == "O").length;
 
@@ -82,6 +85,19 @@ $(document).ready(function () {
             }
             else if (tablePlayer2[attackedIndex] == "O") {
                 tablePlayer2[attackedIndex] = "X";
+                for (let i = 0; i < battleships2.length; i++) {
+                    for (let j = 0; j < battleships2[i].indices.length; j++) {
+                        if (attackedIndex == battleships2[i].indices[j]) {
+                            if (--battleships2[i].notHitCount == 0) {
+                                battleships2[i].indices.forEach(index => {
+                                    tablePlayer2[index] = "#";
+                                    setNewTextInOpponentShipsTable(index, tablePlayer2[index]);
+                                });
+                            }                            
+                        }                        
+                    }
+                }
+
                 if (--battleshipCnt2 == 0) {
                     setTimeout(function () {
                         alert(username1 + " wins with " + battleshipCnt1 + " battleships left");
@@ -111,6 +127,19 @@ $(document).ready(function () {
             }
             else if (tablePlayer1[attackedIndex] == "O") {
                 tablePlayer1[attackedIndex] = "X";
+                for (let i = 0; i < battleships1.length; i++) {
+                    for (let j = 0; j < battleships1[i].indices.length; j++) {
+                        if (attackedIndex == battleships1[i].indices[j]) {
+                            if (--battleships1[i].notHitCount == 0) {
+                                battleships1[i].indices.forEach(index => {
+                                    tablePlayer1[index] = "#";
+                                    setNewTextInOpponentShipsTable(index, tablePlayer1[index]);
+                                });
+                            }                
+                        }                        
+                    }
+                }
+
                 if (--battleshipCnt1 == 0) {
                     setTimeout(function () {
                         alert(username2 + " wins with " + battleshipCnt2 + " battleships left");
